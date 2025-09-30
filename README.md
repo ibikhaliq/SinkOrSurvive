@@ -1,37 +1,58 @@
 # SinkOrSurvive
+🚢 Titanic Survival Prediction
+    This project predicts whether a passenger survived the Titanic disaster using machine learning and real passenger data. It demonstrates the full ML lifecycle:
+    Data preprocessing & feature engineering (Age imputation, Cabin flag, Family size, One-Hot Encoding)
+    Model training & tuning with Gradient Boosting (via GridSearchCV)
+    Serving the model through a FastAPI backend (/predict and /predict-batch endpoints)
+    Interactive frontend built with Streamlit, where users can enter passenger details and instantly see survival predictions with probabilities.
+
 📊 Dataset
 Dataset: Kaggle Titanic: Machine Learning from Disaster
+
+
 Columns used:
-Pclass → ticket class (1–3)
-Sex → male / female
-Age → filled with median
-SibSp → siblings/spouses aboard
-Parch → parents/children aboard
-Fare → filled with median
-Embarked → C, Q, or S (most frequent fill for missing)
-HasCabin → binary (was cabin info recorded?)
+  Pclass → ticket class (1–3)
+  Sex → male / female
+  Age → filled with median
+  SibSp → siblings/spouses aboard
+  Parch → parents/children aboard
+  Fare → filled with median
+  Embarked → C, Q, or S (most frequent fill for missing)
+  HasCabin → binary (was cabin info recorded?)
+
+  
 Engineered Features:
-Family_Size = SibSp + Parch + 1
-IsAlone = 1 if Family_Size == 1 else 0
+  Family_Size = SibSp + Parch + 1
+  IsAlone = 1 if Family_Size == 1 else 0
+
+  
 🤖 Model Training (train.py)
-Model: GradientBoostingClassifier
-Hyperparameter tuning with GridSearchCV
-Scoring metric: ROC AUC
-Feature importance plotted
+  Model: GradientBoostingClassifier
+  Hyperparameter tuning with GridSearchCV
+  Scoring metric: ROC AUC
+  Feature importance plotted
+
+  
 Example Outputs:
-Best params found by GridSearchCV
-CV AUC and Test AUC
-Confusion matrix heatmap
-Feature importance bar chart
-The best pipeline is saved as:
-titanic_pipeline.joblib
+  Best params found by GridSearchCV
+  CV AUC and Test AUC
+  Confusion matrix heatmap
+  Feature importance bar chart
+  The best pipeline is saved as:
+      titanic_pipeline.joblib
+
+      
 🛠️ FastAPI Backend (app.py)
-Run API:
-uvicorn app:app --reload --port 8000
+  Run API:
+    uvicorn app:app --reload --port 8000
+
+    
 Endpoints:
-GET /health → simple health check
-POST /predict → single passenger prediction
-POST /predict-batch → batch predictions (list of passengers)
+  GET /health → simple health check
+  POST /predict → single passenger prediction
+  POST /predict-batch → batch predictions (list of passengers)
+
+  
 Example request:
 {
   "Pclass": 3,
@@ -48,32 +69,36 @@ Example response:
   "prediction": 0,
   "survival_probability": 0.12
 }
+
+
 Docs auto-generated:
-Swagger UI: http://127.0.0.1:8000/docs
-ReDoc: http://127.0.0.1:8000/redoc
-🎛️ Streamlit Frontend (streamlit_frontend.py)
-Interactive UI for predictions.
-Run:
-streamlit run streamlit_frontend.py
-Opens at: http://localhost:8501
+  Swagger UI: http://127.0.0.1:8000/docs
+  ReDoc: http://127.0.0.1:8000/redoc
+  🎛️ Streamlit Frontend (streamlit_frontend.py)
+  Interactive UI for predictions.
+    Run:
+      streamlit run streamlit_frontend.py
+      Opens at: http://localhost:8501
+
+      
 Features:
 Sidebar form for passenger details (class, sex, age, family, fare, etc.)
 Calls FastAPI /predict endpoint
 Displays prediction + survival probability with ✅ or ❌
 📦 Requirements
-  fastapi
-  uvicorn
-  pydantic
-  pandas
-  scikit-learn
-  joblib
-  streamlit
-  seaborn
-  matplotlib
-  requests
-Install:
-  pip install -r requirements.txt
-  📈 Visualizations in Training
+    fastapi
+    uvicorn
+    pydantic
+    pandas
+    scikit-learn
+    joblib
+    streamlit
+    seaborn
+    matplotlib
+    requests
+
+  
+📈 Visualizations in Training
   Survival by Sex (barplot)
   Survival by Class (barplot)
   Fare vs Survival (violinplot)
